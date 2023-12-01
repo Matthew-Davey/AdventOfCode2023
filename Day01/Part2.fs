@@ -6,14 +6,14 @@ open FSharpPlus
 
 let convertSpelledOutNumerals =
     String.replace "one" "o1e"
-    >> String.replace "two" "t2o"
+    >> String.replace "two" "t2"
     >> String.replace "three" "t3e"
     >> String.replace "four" "4"
     >> String.replace "five" "5e"
     >> String.replace "six" "6"
     >> String.replace "seven" "7n"
-    >> String.replace "eight" "e8t"
-    >> String.replace "nine" "n9e"
+    >> String.replace "eight" "e8"
+    >> String.replace "nine" "9"
     
 let filterNumerals = Seq.filter Char.IsDigit
 let numeralsToValues = Seq.map CharUnicodeInfo.GetDigitValue
