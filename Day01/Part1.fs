@@ -1,4 +1,4 @@
-module Day01.Part01
+module Day01.Part1
 
 open System
 open System.Globalization
