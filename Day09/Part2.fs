@@ -1,4 +1,4 @@
-module Day09.Part1
+module Day09.Part2
 
 open FParsec
 
@@ -12,15 +12,15 @@ let rec deriveWhile predicate derive x = seq {
     | derived when predicate derived -> yield! deriveWhile predicate derive derived
     | derived -> yield derived }
 
-let rec appendToLast v = function
-    | [ head ]   -> [head @ v]
-    | head::tail -> [head] @ (appendToLast v tail)
+let rec prependToLast v = function
+    | [ head ]   -> [v @ head]
+    | head::tail -> [head] @ (prependToLast v tail)
 
-let extrapolateForwards x y = x @ [(List.last x) + (List.last y)]
+let extrapolateBackwards x y = [(List.head x) - (List.head y)] @ x
     
 let run input =
     CharStream.ParseString(input, 0, String.length input, (many numbers), (), null).Result
     |> List.map (deriveWhile (List.exists ((<>) 0)) (pairwiseMap (-)) >> List.ofSeq)
-    |> List.map (appendToLast [0])
-    |> List.map (List.reduceBack extrapolateForwards)
-    |> List.sumBy List.last
+    |> List.map (prependToLast [0])
+    |> List.map (List.reduceBack extrapolateBackwards)
+    |> List.sumBy List.head
